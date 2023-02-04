@@ -48,21 +48,19 @@ npm install remix-auth-otp
 
 ### Database
 
-We'll require a database to store the OTP codes. The OTP model will not be related to any User, this simplifies the process of generating the OTP code and makes it easier to be implemented to any database of your choice.
+We'll require a database to store the OTP codes. The OTP model has no relations to any User, this simplifies the process of generating the codes and makes it easier to be implemented into any database of your choice.
 
-In this example we'll use Prisma ORM with a Sqlite database. As long as the database OTP Model looks like the following one, you are good to go.
+In this example we'll use Prisma ORM with a SQLite database. As long as the database OTP Model looks like the following one, you are good to go.
 
 ```ts
 // prisma/schema.prisma
 
-/**
- * The OTP model only requires 3 fields: code, active and attempts.
- *
- * The `code` field will be a String and will be unique.
- * The `active` field will be a Boolean and will be set to false by default.
- * The `attempts` field will be an Int (Number) and will be set to 0 by default.
- * The `createdAt` and `updatedAt` fields are optional, and not required.
- */
+// The OTP model only requires 3 fields: code, active and attempts.
+// ...
+// The `code` field will be a String and will be unique.
+// The `active` field will be a Boolean and will be set to false by default.
+// The `attempts` field will be an Int (Number) and will be set to 0 by default.
+// The `createdAt` and `updatedAt` fields are optional, and not required.
 model Otp {
   id String @id @default(cuid())
 
@@ -77,7 +75,7 @@ model Otp {
 
 ### Email Service
 
-We'll require an Email Service to send the OTP code to the user. I'll recommend [Sendinblue](https://www.sendinblue.com), it's free and does not require Credit Card for registration, either use. Feel free to use any other Email Service of your choice like [Mailgun](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), etc.
+We'll require an Email Service to send the OTP codes to our users. I'll recommend [Sendinblue](https://www.sendinblue.com), it's free and does not require Credit Card for registration, either use. Feel free to use any other Email Service of your choice like [Mailgun](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), etc.
 
 The goal is to have a sender function similar to the following one.
 
@@ -151,9 +149,9 @@ import type { User } from '@prisma/client'
 import { Authenticator } from 'remix-auth'
 import { OTPStrategy } from 'remix-auth-otp'
 
-import { db } from '~/db'
 import { sessionStorage } from './session.server'
 import { sendEmail } from './email.server'
+import { db } from '~/db'
 
 export let authenticator = new Authenticator<User>(sessionStorage, {
   throwOnError: true,
@@ -184,10 +182,8 @@ It's important to note that `storeCode`, `sendCode`, `validateCode` and `invalid
 // app/services/auth.server.ts
 authenticator.use(
   new OTPStrategy({
-    /**
-     * Stores encrypted OTP code in database.
-     * It should return a Promise<void>.
-     */
+    // Stores encrypted OTP code in database.
+    // It should return a Promise<void>.
     storeCode: async (code) => {
       await db.otp.create({
         data: {
@@ -198,10 +194,8 @@ authenticator.use(
       })
     },
 
-    /**
-     * Sends the OTP code to the user.
-     * It should return a Promise<void>.
-     */
+    // Sends the OTP code to the user.
+    // It should return a Promise<void>.
     sendCode: async ({ email, code, magicLink, user, form, request }) => {
       const sender = { name: 'Remix Auth', email: 'localhost@example.com' }
       const to = [{ email }]
@@ -223,10 +217,8 @@ authenticator.use(
       await sendEmail({ sender, to, subject, htmlContent })
     },
 
-    /**
-     * Validates the OTP code.
-     * It should return a Promise<{code: string, active: boolean, attempts: number}>.
-     */
+    // Validates the OTP code.
+    // It should return a Promise<{code: string, active: boolean, attempts: number}>.
     validateCode: async (code) => {
       const otp = await db.otp.findUnique({
         where: {
@@ -242,10 +234,8 @@ authenticator.use(
       }
     },
 
-    /**
-     * Invalidates the OTP code.
-     * It should return a Promise<void>.
-     */
+    // Invalidates the OTP code.
+    // It should return a Promise<void>.
     invalidateCode: async (code, active, attempts) => {
       await db.otp.update({
         where: {
@@ -280,7 +270,7 @@ authenticator.use(
     async ({ email, code, magicLink, form, request }) => {
       // You can determine whether the user is authenticating
       // via OTP submission or Magic Link and run your own logic.
-      // (This is optional.)
+      // (This is optional)
       if (form) {
         console.log('OTP code form submission.')
       }
@@ -305,10 +295,11 @@ authenticator.use(
         })
         if (!newUser) throw new Error('Unable to create new user.')
 
+        // Returns newly created user as Session.
         return newUser
       }
 
-      // Returns the user.
+      // Returns the user from database as Session.
       return user
     },
   ),
@@ -355,22 +346,16 @@ export async function loader({ request }: DataFunctionArgs) {
 
 export async function action({ request }: DataFunctionArgs) {
   await authenticator.authenticate('OTP', request, {
-    /**
-     * Setting `successRedirect` it's required.
-     *
-     * User is not authenticated yet.
-     * We want to redirect to the verify code form.
-     *
-     * Feel free to redirect to any other page like /verify-code.
-     */
+    // Setting `successRedirect` it's required.
+    // ...
+    // User is not authenticated yet.
+    // We want to redirect to the verify code form. (/verify-code or any other route)
     successRedirect: '/login',
 
-    /**
-     * Setting `failureRedirect` it's required.
-     *
-     * We want to display any possible error message.
-     * Otherwise the ErrorBoundary / CatchBoundary will be triggered.
-     */
+    // Setting `failureRedirect` it's required.
+    // ...
+    // We want to display any possible error message.
+    // Otherwise the ErrorBoundary / CatchBoundary will be triggered.
     failureRedirect: '/login',
   })
 }
@@ -556,7 +541,6 @@ authenticator.use(
     },
     // storeCode: async (code) => {},
     // sendCode: async ({ email, ... }) => {},
-    // ...
   }),
 )
 ```
