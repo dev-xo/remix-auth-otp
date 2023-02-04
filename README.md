@@ -61,6 +61,7 @@ In this example we'll use Prisma ORM with a SQLite database. As long as the data
 // The `active` field will be a Boolean and will be set to false by default.
 // The `attempts` field will be an Int (Number) and will be set to 0 by default.
 // The `createdAt` and `updatedAt` fields are optional, and not required.
+
 model Otp {
   id String @id @default(cuid())
 
@@ -475,7 +476,7 @@ This can be used to verify that the provided email is not a disposable one.
 authenticator.use(
   new OTPStrategy({
     validateEmail: async (email) => {
-      // Do something with the email.
+      // Handles email validation.
     },
     // storeCode: async (code) => {},
     // sendCode: async ({ email, ... }) => {},
