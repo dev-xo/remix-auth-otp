@@ -627,8 +627,6 @@ authenticator.use(
 )
 ```
 
-> **Note:** Just enabling the Magic Link feature is not enough, you will need to also [create the `magic-link` route](#auth-routes).
-
 ### More Options
 
 The Strategy supports a few more optional configuration options you can set.<br />
