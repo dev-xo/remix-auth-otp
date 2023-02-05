@@ -1,27 +1,11 @@
-<h1 align="center">Remix Auth OTP 💿</h1>
+# Remix Auth OTP 💿
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/dev-xo/dev-xo/main/remix-auth-otp/assets/images/Logo_5.png" alt="Logo">
-</p>
+[![CI](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg)](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml)
+[![Version](https://img.shields.io/npm/v/remix-auth-otp.svg?&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dev-xo/remix-auth-otp/blob/main/LICENSE)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social)](https://twitter.com/DanielKanem)
 
-<p align="center">
-  <a href="https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml">
-    <img src="https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg" alt="CI">
-  </a>
-  <a href="https://www.npmjs.com/package/remix-auth-otp">
-    <img src="https://img.shields.io/npm/v/remix-auth-otp.svg?&label=Version" alt="Version">
-  </a>
-  <a href="https://github.com/dev-xo/remix-auth-otp/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License">
-  </a>
-  <a href="https://twitter.com/DanielKanem">
-    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social" alt="Twitter">
-  </a>
-</p>
-
-<p align="center">
-  A <strong>One-Time Password Authentication</strong> <em>Strategy</em> for Remix Auth.
-</p>
+A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
 ### Features
 
