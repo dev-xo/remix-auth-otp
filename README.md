@@ -126,7 +126,7 @@ export const sessionStorage = createCookieSessionStorage({
     sameSite: 'lax',
     path: '/',
     httpOnly: true,
-    secrets: [process.env.SESSION_SECRET || 'NOT_A_STRONG_SECRET'],
+    secrets: [process.env.SESSION_SECRET || 'STRONG_SECRET'],
     secure: process.env.NODE_ENV === 'production',
   },
 })
@@ -161,7 +161,7 @@ export let authenticator = new Authenticator<User>(sessionStorage, {
 authenticator.use(
   new OTPStrategy(
     {
-      secret: 'NOT_A_STRONG_SECRET',
+      secret: 'STRONG_SECRET',
       storeCode: async (code) => {},
       sendCode: async ({ email, code, magicLink, user, form, request }) => {},
       validateCode: async (code) => {},
@@ -264,7 +264,7 @@ authenticator.use(
   new OTPStrategy(
     {
       // We've already set up this options.
-      // secret: 'NOT_A_STRONG_SECRET',
+      // secret: 'STRONG_SECRET',
       // storeCode: async (code) => {},
       // ...
     },
@@ -371,7 +371,7 @@ export default function Login() {
 
       {/* Renders the form that sends the email. */}
       {!user && !hasSentEmail && (
-        <Form method="post" autoComplete="off">
+        <Form method="post">
           <label htmlFor="email">Email</label>
           <input name="email" placeholder="Insert email .." required />
 
@@ -382,7 +382,7 @@ export default function Login() {
       {/* Renders the form that verifies the code. */}
       {hasSentEmail && (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Form method="post" autoComplete="off">
+          <Form method="post">
             <label htmlFor="code">Code</label>
             <input type="text" name="code" placeholder="Insert code .." required />
 
@@ -391,7 +391,7 @@ export default function Login() {
 
           {/* Renders the form that requests a new code. */}
           {/* Email input is not required, the email is already in Session. */}
-          <Form method="post" autoComplete="off">
+          <Form method="post">
             <button type="submit">Request new Code</button>
           </Form>
         </div>
