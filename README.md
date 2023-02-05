@@ -1,4 +1,4 @@
-# Remix Auth OTP
+# Remix Auth OTP 💿
 
 [![CI](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg)](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml)
 [![NPM Version](https://img.shields.io/npm/v/remix-auth-otp.svg?style&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
@@ -8,12 +8,11 @@ A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
 ### Features
 
-- **🥳 Easy to Setup**. The Strategy will handle the entire Authentication Flow for you.
+- **😌 Easy to Setup**. The Strategy will handle the entire authentication flow for you.
 - **🔐 Secure**. The OTP code is encrypted and signed with a Secret Key.
 - **📧 Magic Link Built-In**. Send a Magic Link to the user and authenticate it with a simple click.
 - **📚 One Source of Truth**. The database of your choice.
 - **🛡 Bulletproof**. Written in strict TypeScript with a high test coverage.
-- **🗂 Typed**. Ships with types included.
 - **🚀 Built on top of Remix Auth**. An amazing authentication library for Remix.
 
 ## Live Demo
@@ -23,7 +22,7 @@ Feel free to check and test it at [Remix Auth OTP Stack](https://remix-auth-otp.
 
 ## Getting Started
 
-This Strategy uses a Passwordless Authentication Flow based on Email-Code validation.<br />
+This Strategy uses a Passwordless authentication flow based on Email-Code validation.<br />
 
 The user will receive an email with a code that will be used to authenticate itself.<br />
 The code has just a single use and it's valid for a short period of time, which makes it very secure.<br />
@@ -103,7 +102,7 @@ export async function sendEmail(body: SendEmailBody) {
 ### Session Storage
 
 We'll require to initialize a new Cookie Session Storage to work with.<br />
-The Session will be used to store the user data and everything related to the Authentication Flow.
+The Session will be used to store the user data and everything related to the authentication flow.
 
 Create a file called `session.server.ts` wherever you want.<br />
 Paste the following code and replace the `secrets` property with a strong string into your `.env` file.
@@ -303,7 +302,7 @@ And that's it! Feel free to check the [Example Code](https://github.com/dev-xo/r
 
 ### Auth Routes
 
-Last but not least, we'll need to create the routes that will handle the Authentication Flow.
+Last but not least, we'll need to create the routes that will handle the authentication flow.
 Create the following files inside the `app/routes` folder.
 
 ```tsx
