@@ -1,20 +1,12 @@
-<br />
-<p align="center">
-  <img src="https://raw.githubusercontent.com/dev-xo/dev-xo/main/remix-auth-otp/assets/images/Intro-v4.png" alt="Logo">
-</p>
+# Remix Auth OTP
 
-<p align="center">
-  A One-Time Password Authentication Strategy for Remix Auth
-  <br>
-  <br>
-  <a href="https://remix-auth-otp.fly.dev">Live Demo</a>
-  ·
-  <a href="https://www.npmjs.com/package/remix-auth-otp">Package</a>
-  ·
-  <a href="https://twitter.com/DanielKanem">Author Twitter</a>
-</p>
+[![CI](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg)](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml)
+[![NPM Version](https://img.shields.io/npm/v/remix-auth-otp.svg?style=social&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social&label=Author)](https://twitter.com/DanielKanem)
 
-## Features
+A **One-Time Password Authentication** _Strategy_ for Remix Auth.
+
+### Features
 
 - **🥳 Easy to Setup**. The Strategy will handle the entire Authentication Flow for you.
 - **🔐 Secure**. The OTP code is encrypted and signed with a Secret Key.
