@@ -1,8 +1,8 @@
 # Remix Auth OTP
 
 [![CI](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg)](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml)
-[![NPM Version](https://img.shields.io/npm/v/remix-auth-otp.svg?style=social&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social&label=Author)](https://twitter.com/DanielKanem)
+[![NPM Version](https://img.shields.io/npm/v/remix-auth-otp.svg?style&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social)](https://twitter.com/DanielKanem)
 
 A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
