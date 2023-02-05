@@ -4,8 +4,8 @@ import { createCookieSessionStorage } from '@remix-run/node'
 /**
  * Constants.
  */
-export const HOST_URL = 'localhost:3000'
 export const SECRET_ENV = 'SECRET'
+export const HOST_URL = 'localhost:3000'
 
 /**
  * Strategy Instance Defaults.
