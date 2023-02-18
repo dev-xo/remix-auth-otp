@@ -319,13 +319,11 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: true,
   }
-
   private readonly magicLinkGenerationDefaults = {
     enabled: true,
     baseUrl: undefined,
     callbackPath: '/magic-link',
   }
-
   private readonly customErrorsDefaults = {
     requiredEmail: 'Email address is required.',
     invalidEmail: 'Email address is not valid.',
@@ -403,12 +401,12 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
           email = form[this.emailField] && String(form[this.emailField])
           code = form[this.codeField] && String(form[this.codeField])
 
-          // Requests a new OTP code.
+          // Request a new OTP code.
           if (!code && sessionEmail && sessionOtpEncrypted) {
-            // Invalidates previous OTP code.
+            // Invalidate previous OTP code.
             await this.invalidateOtp(sessionOtpEncrypted, false)
 
-            // Re-assigns email. Required for OTP code generation.
+            // Re-assign email. Required for OTP code generation.
             email = sessionEmail
           }
 
@@ -418,7 +416,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
             }
             await this.validateEmail(email)
 
-            // Generates and encrypts the OTP code.
+            // Generate and encrypt the OTP code.
             const otp = generateOtp({ ...this.codeGeneration })
             const otpEncrypted = await encrypt(
               JSON.stringify({ email, ...otp }),
@@ -431,7 +429,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
               request,
             })
 
-            // Stores and sends the OTP code.
+            // Store and send the OTP code.
             await this.saveOtp(otpEncrypted)
             await this.sendOtp(email, otp.code, magicLink, formData, request)
 
@@ -467,7 +465,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
             throw new Error('Missing required OTP code.')
           }
 
-          // Handles validations.
+          // Handle validations.
           if (isPost && code) {
             await this.validateOtp(code, sessionOtpEncrypted)
           }
@@ -475,10 +473,10 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
             await this.validateMagicLink(magicLink, sessionOtpEncrypted)
           }
 
-          // Handles invalidations.
+          // Handle invalidations.
           await this.invalidateOtp(sessionOtpEncrypted, false)
 
-          // Gets and sets user data.
+          // Get and Set user data.
           user = await this.verify({
             email: sessionEmail,
             form: formData,
@@ -505,7 +503,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
 
       if (error instanceof Error) {
         if (error.message === 'Code has reached maximum attempts.') {
-          // Invalidates maximum attempted OTP code.
+          // Invalidate maximum attempted OTP code.
           const sessionOtpEncrypted = session.get(this.sessionOtpKey)
           await this.invalidateOtp(sessionOtpEncrypted, false)
         }
@@ -571,7 +569,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
   }
 
   private async validateOtpEncrypted(sessionOtpEncrypted: string) {
-    // Retrieves encrypted OTP code from database.
+    // Retrieve encrypted OTP code from database.
     const dbPayload = await this.validateCode(sessionOtpEncrypted)
 
     if (
@@ -617,7 +615,7 @@ export class OTPStrategy<User> extends Strategy<User, OTPVerifyParams> {
     )
 
     if (otp.code !== code) {
-      // Updates the attempts count.
+      // Update attempts count.
       await this.invalidateCode(
         sessionOtpEncrypted,
         dbPayload.active,
