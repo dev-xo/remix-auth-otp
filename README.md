@@ -47,11 +47,12 @@ In this example we'll use Prisma ORM with a SQLite database. As long as the data
 ```ts
 // prisma/schema.prisma
 
-// The OTP model only requires 3 fields: code, active and attempts.
+// The model only requires 3 fields: code, active and attempts.
 // ...
-// The `code` field will be a String and will be unique.
-// The `active` field will be a Boolean and will be set to false by default.
-// The `attempts` field will be an Int (Number) and will be set to 0 by default.
+// The `code` field should be a String.
+// The `active` field should be a Boolean and be set to false by default.
+// The `attempts` field should be an Int (Number) and be set to 0 by default.
+// ...
 // The `createdAt` and `updatedAt` fields are optional, and not required.
 
 model Otp {
@@ -74,20 +75,7 @@ The goal is to have a sender function similar to the following one.
 
 ```ts
 // app/services/email.server.ts
-export interface SendEmailBody {
-  sender: {
-    name: string
-    email: string
-  }
-  to: {
-    name?: string
-    email: string
-  }[]
-  subject: string
-  htmlContent: string
-}
-
-export async function sendEmail(body: SendEmailBody) {
+export async function sendEmail(body) {
   return fetch(`https://any-email-service.com`, {
     method: 'post',
     headers: {
@@ -175,7 +163,7 @@ It's important to note that `storeCode`, `sendCode`, `validateCode` and `invalid
 // app/services/auth.server.ts
 authenticator.use(
   new OTPStrategy({
-    // Stores encrypted OTP code in database.
+    // Store encrypted code in database.
     // It should return a Promise<void>.
     storeCode: async (code) => {
       await db.otp.create({
@@ -187,7 +175,7 @@ authenticator.use(
       })
     },
 
-    // Sends the OTP code to the user.
+    // Send code to the user.
     // It should return a Promise<void>.
     sendCode: async ({ email, code, magicLink, user, form, request }) => {
       const sender = { name: 'Remix Auth', email: 'localhost@example.com' }
@@ -206,11 +194,11 @@ authenticator.use(
         </html>
       `
 
-      // Calls the provider sender email function.
+      // Call provider sender email function.
       await sendEmail({ sender, to, subject, htmlContent })
     },
 
-    // Validates the OTP code.
+    // Validate code.
     // It should return a Promise<{code: string, active: boolean, attempts: number}>.
     validateCode: async (code) => {
       const otp = await db.otp.findUnique({
@@ -227,7 +215,7 @@ authenticator.use(
       }
     },
 
-    // Invalidates the OTP code.
+    // Invalidate code.
     // It should return a Promise<void>.
     invalidateCode: async (code, active, attempts) => {
       await db.otp.update({
@@ -262,8 +250,7 @@ authenticator.use(
     },
     async ({ email, code, magicLink, form, request }) => {
       // You can determine whether the user is authenticating
-      // via OTP submission or Magic Link and run your own logic.
-      // (This is optional)
+      // via OTP submission or Magic Link and run your own logic. (Optional)
       if (form) {
         console.log('OTP code form submission.')
       }
@@ -272,7 +259,7 @@ authenticator.use(
         console.log('Magic Link clicked.')
       }
 
-      // Gets user from database.
+      // Get user from database.
       // This is the right place to create a new user (if not exists).
       const user = await db.user.findFirst({
         where: {
@@ -288,11 +275,11 @@ authenticator.use(
         })
         if (!newUser) throw new Error('Unable to create new user.')
 
-        // Returns newly created user as Session.
+        // Return newly created user as Session.
         return newUser
       }
 
-      // Returns the user from database as Session.
+      // Return the user from database as Session.
       return user
     },
   ),
@@ -305,6 +292,8 @@ And that's it! Feel free to check the [Example Code](https://github.com/dev-xo/r
 
 Last but not least, we'll need to create the routes that will handle the authentication flow.
 Create the following files inside the `app/routes` folder.
+
+### 1. Login Route
 
 ```tsx
 // app/routes/login.tsx
@@ -393,6 +382,8 @@ export default function Login() {
 }
 ```
 
+### 2. Account Route
+
 ```tsx
 // app/routes/account.tsx
 import type { DataFunctionArgs } from '@remix-run/node'
@@ -424,6 +415,8 @@ export default function Account() {
 }
 ```
 
+### 3. Magic Link Route
+
 ```tsx
 // app/routes/magic-link.tsx
 import type { DataFunctionArgs } from '@remix-run/node'
@@ -442,6 +435,8 @@ export async function loader({ request, params }: DataFunctionArgs) {
   }
 }
 ```
+
+### 4. Logout Route
 
 ```tsx
 // app/routes/logout.tsx
@@ -493,31 +488,37 @@ export interface CodeGenerationOptions {
    * @default 900000 Default is 15 minutes in milliseconds. (1000 * 60 * 15)
    */
   expiresAt?: number
+
   /**
    * How many times an invalid OTP code can be inputted.
    * @default 3
    */
   maxAttempts?: number
+
   /**
    * How long the OTP code will be in length.
    * @default 6
    */
   length?: number
+
   /**
    * Whether the OTP code should contain digits.
    * @default false
    */
   digits?: boolean
+
   /**
    * Whether the OTP code should contain lower case alphabets.
    * @default false
    */
   lowerCaseAlphabets?: boolean
+
   /**
    * Whether the OTP code should contain upper case alphabets.
    * @default true
    */
   upperCaseAlphabets?: boolean
+
   /**
    * Whether the OTP code should contain special characters.
    * @default false
@@ -555,12 +556,14 @@ export interface MagicLinkGenerationOptions {
    * @default true
    */
   enabled?: boolean
+
   /**
    * The base URL for building the Magic Link URL.
    * If omitted, the `baseUrl` will be inferred from the request.
    * @default undefined
    */
   baseUrl?: string
+
   /**
    * The path for the Magic Link callback.
    * If your provider route name is different than `magic-link`, you can update it on here.
@@ -570,7 +573,7 @@ export interface MagicLinkGenerationOptions {
 }
 ```
 
-> **Note:** Just enabling the Magic Link feature is not enough, you will need to also [create the `magic-link` route](#auth-routes).
+> **Note:** Just enabling the Magic Link feature is not enough, you will need to also [create the `magic-link` route](#3-magic-link-route).
 
 ### Custom Error Messages
 
@@ -634,21 +637,25 @@ export interface OTPStrategyOptions<User> {
    * @default ''
    */
   secret?: string
+
   /**
    * The form input name used to get the email address.
    * @default "email"
    */
   emailField?: string
+
   /**
    * The form input name used to get the OTP code.
    * @default "code"
    */
   codeField?: string
+
   /**
    * A Session key that stores the email address.
    * @default "auth:email"
    */
   sessionEmailKey?: string
+
   /**
    * A Session key that stores the encrypted OTP code.
    * @default "auth:code"
