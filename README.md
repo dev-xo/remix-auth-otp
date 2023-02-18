@@ -75,7 +75,20 @@ The goal is to have a sender function similar to the following one.
 
 ```ts
 // app/services/email.server.ts
-export async function sendEmail(body) {
+export interface SendEmailBody {
+  sender: {
+    name: string
+    email: string
+  }
+  to: {
+    name?: string
+    email: string
+  }[]
+  subject: string
+  htmlContent: string
+}
+
+export async function sendEmail(body: SendEmailBody) {
   return fetch(`https://any-email-service.com`, {
     method: 'post',
     headers: {
