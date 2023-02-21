@@ -26,10 +26,12 @@ The template demo has been built to be really simple to use, being able to displ
 
 This Strategy uses a Passwordless authentication flow based on Email-Code validation.<br />
 
-The user will receive an email with a code that will be used to authenticate itself.<br />
-The code has just a single use and it's valid for a short period of time, which makes it very secure.<br />
+The user will receive an email with a code that will be used to authenticate itself. The code has just a single use and it's valid for a short period of time, which makes it very secure.<br />
 
 Let's see how we can implement this Strategy for our Remix App.
+
+> **Note**
+> All the code examples are written in TypeScript. Feel free to use JavaScript instead and adapt the code to your needs.
 
 ### Install the Package
 
@@ -38,9 +40,6 @@ First things first, we'll need to install the package.
 ```bash
 npm install remix-auth-otp
 ```
-
-> **Note**
-> All the code examples are written in TypeScript. Feel free to use JavaScript instead and adapt the code to your needs.
 
 ### Database
 
