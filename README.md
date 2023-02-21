@@ -3,7 +3,7 @@
 [![CI](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml/badge.svg)](https://github.com/dev-xo/remix-auth-otp/actions/workflows/main.yml)
 [![Version](https://img.shields.io/npm/v/remix-auth-otp.svg?&label=Version)](https://www.npmjs.com/package/remix-auth-otp)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dev-xo/remix-auth-otp/blob/main/LICENSE)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social)](https://twitter.com/DanielKanem)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&style=social&label=Author)](https://twitter.com/DanielKanem)
 
 A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
@@ -18,8 +18,9 @@ A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
 ## Live Demo
 
-The template demo has been built to be really simple to use, being able to display all its provided features.<br />
-Feel free to check and test it at [Remix Auth OTP Stack](https://otp-stack.fly.dev)
+The template demo has been built to be really simple to use, being able to display all its provided features. Feel free to check and test it at [Remix Auth OTP Stack](https://otp-stack.fly.dev)
+
+![Remix Auth OTP Stack](https://raw.githubusercontent.com/dev-xo/dev-xo/main/remix-auth-otp/assets/images/Thumbnail.png)
 
 ## Getting Started
 
@@ -37,6 +38,9 @@ First things first, we'll need to install the package.
 ```bash
 npm install remix-auth-otp
 ```
+
+> **Note**
+> All the code examples are written in TypeScript. Feel free to use JavaScript instead and adapt the code to your needs.
 
 ### Database
 
