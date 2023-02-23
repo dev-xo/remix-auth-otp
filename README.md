@@ -18,7 +18,7 @@ A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
 ## Live Demo
 
-We've created a simple template demo that displays the authentication workflow. Feel free to check and test it at [Remix Auth OTP Stack](https://otp-stack.fly.dev)
+We've created a simple template demo that displays the authentication workflow. Feel free to test it [here](https://otp-stack.fly.dev).
 
 ![Remix Auth OTP Stack](https://raw.githubusercontent.com/dev-xo/dev-xo/main/remix-auth-otp/assets/images/Thumbnail.png)
 
