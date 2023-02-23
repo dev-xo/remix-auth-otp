@@ -18,13 +18,13 @@ A **One-Time Password Authentication** _Strategy_ for Remix Auth.
 
 ## Live Demo
 
-The template demo has been built to be really simple to use, being able to display all its provided features. Feel free to check and test it at [Remix Auth OTP Stack](https://otp-stack.fly.dev)
+We've created a simple template demo that displays the authentication workflow. Feel free to check and test it at [Remix Auth OTP Stack](https://otp-stack.fly.dev)
 
 ![Remix Auth OTP Stack](https://raw.githubusercontent.com/dev-xo/dev-xo/main/remix-auth-otp/assets/images/Thumbnail.png)
 
 ## Getting Started
 
-This Strategy uses a Passwordless authentication flow based on Email-Code validation.<br />
+This Strategy uses a password-less authentication flow based on Email-Code validation.<br />
 
 The user will receive an email with a code that will be used to authenticate itself. The code has just a single use and it's valid for a short period of time, which makes it very secure.<br />
 
@@ -43,9 +43,9 @@ npm install remix-auth-otp
 
 ### Database
 
-We'll require a database to store the OTP codes. The OTP model has no relations to any User, this simplifies the process of generating the codes and makes it easier to be implemented into any database of your choice.
+We'll require a database to store our codes. The OTP model has no relations to any other model from your database, this simplifies the process of generating the codes and makes it easier to be implemented into any database of your choice.
 
-In this example we'll use Prisma ORM with a SQLite database. As long as the database OTP Model looks like the following one, you are good to go.
+In this example we'll use Prisma ORM with a SQLite database. As long as your database model looks like the following one, you are good to go.
 
 ```ts
 // prisma/schema.prisma
@@ -72,7 +72,7 @@ model Otp {
 
 ### Email Service
 
-We'll require an Email Service to send the OTP codes to our users. I'll recommend [Sendinblue](https://www.sendinblue.com), it's free and does not require Credit Card for registration, either use. Feel free to use any other Email Service of your choice like [Mailgun](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), etc.
+We'll require an Email Service to send the codes to our users. I'll recommend [Sendinblue](https://www.sendinblue.com), it's free and does not require Credit Card for registration, either use. Feel free to use any other Email Service of your choice like [Mailgun](https://www.mailgun.com/), [Sendgrid](https://sendgrid.com/), etc.
 
 The goal is to have a sender function similar to the following one.
 
