@@ -170,8 +170,7 @@ authenticator.use(
 
 ### 2. Setting Up the Strategy Options.
 
-The Strategy Instance requires the following options.
-It's important to note that `storeCode`, `sendCode`, `validateCode` and `invalidateCode` are all required.
+The Strategy Instance requires the following methods: `storeCode`, `sendCode`, `validateCode` and `invalidateCode`. It's important to note that all of them are required.
 
 > Each of these functions can be extracted to a separate file, but for the sake of simplicity, we'll keep them in the same one.
 
@@ -276,26 +275,20 @@ authenticator.use(
       }
 
       // Get user from database.
-      // This is the right place to create a new user (if not exists).
-      const user = await db.user.findFirst({
+      let user = await db.user.findFirst({
         where: {
           email: email,
         },
       })
 
       if (!user) {
-        const newUser = await db.user.create({
-          data: {
-            email: email,
-          },
+        // Create new user.
+        user = await db.user.create({
+          data: { ...user },
         })
-        if (!newUser) throw new Error('Unable to create new user.')
-
-        // Return newly created user as Session.
-        return newUser
       }
 
-      // Return the user from database as Session.
+      // Return user as Session.
       return user
     },
   ),
