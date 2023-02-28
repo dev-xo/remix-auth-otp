@@ -284,7 +284,7 @@ authenticator.use(
       if (!user) {
         // Create new user.
         user = await db.user.create({
-          data: { ...user },
+          data: { email },
         })
       }
 
